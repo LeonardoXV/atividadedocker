@@ -1,0 +1,29 @@
+version: '2.0'
+services: 
+  webserver:
+    image: nginx:alpine
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - app-network
+  db:
+    image: mysql:5.7.32
+    container_name: db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: root
+      MYSQL_ROOT_PASSWORD: 812640Test
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
